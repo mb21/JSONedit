@@ -1,0 +1,31 @@
+<!doctype html>
+<html ng-app="JSONedit">
+<head>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/jquery-ui/js/jquery-ui.min.js"></script>
+    <script src="lib/angular.js"></script>
+    <script src="lib/angular-ui/angular-ui.js"></script>
+    <script src="lib/angular-ui/multiSortable.js"></script>
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="js/directives.js"></script>
+    <script src="js/JSONedit.js"></script>
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="mainView" ng-controller="MainViewCtrl">
+
+        <h2>JSONedit</h2>
+        <h3>The Editor</h3>
+        <div class="jsonView" defocus>
+            <json child="jsonData" type="'object'"></json>
+        </div>
+
+        <h3>The JSON</h3>
+        <div>
+            <textarea ng-model="jsonString"></textarea>
+        </div>
+
+    </div>
+</body>
+</html>
