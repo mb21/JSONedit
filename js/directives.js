@@ -26,17 +26,6 @@ app.directive('ngModelOnblur', function() {
     };
 });
 
-// directive to focus an input element
-// usage: <input type="text" focus />
-app.directive('focus', function() {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attributes) {
-            element[0].focus();
-        }
-    }
-});
-
 app.directive('json', function($compile, $timeout) {
   return {
     restrict: 'E',
@@ -176,16 +165,14 @@ app.directive('json', function($compile, $timeout) {
         var addItemTemplate = 
         '<div ng-switch on="showAddKey" class="block" >'
             + '<span ng-switch-when="true">';
-                var focusSelect = "focus ";
                 if (scope.type == "object"){
                    // input key
                     addItemTemplate += '<input placeholder="Name" type="text" ui-keyup="{\'enter\':\'addItem(child)\'}" '
-                        + 'class="input-small addItemKeyInput" ng-model="$parent.keyName" focus/>'
-                    focusSelect = "";
+                        + 'class="input-small addItemKeyInput" ng-model="$parent.keyName" />';
                 }
                 addItemTemplate += 
                 // value type dropdown
-                '<select ng-model="$parent.valueType" ng-options="option for option in valueTypes" '+focusSelect
+                '<select ng-model="$parent.valueType" ng-options="option for option in valueTypes"'
                     + 'ng-init="$parent.valueType=\''+stringName+'\'" ui-keydown="{\'enter\':\'addItem(child)\'}"></select>'
                 // input value
                 + '<span ng-show="$parent.valueType == \''+stringName+'\'"> : <input type="text" placeholder="Value" '
@@ -196,7 +183,7 @@ app.directive('json', function($compile, $timeout) {
             + '</span>'
             + '<span ng-switch-default>'
                 // plus button
-                + '<button class="addObjectItemBtn" ng-click="$parent.showAddKey = true" focus ><i class="icon-plus"></i></button>'
+                + '<button class="addObjectItemBtn" ng-click="$parent.showAddKey = true"><i class="icon-plus"></i></button>'
             + '</span>'
         + '</div>';
     
