@@ -4,6 +4,7 @@ var app = angular.module('JSONedit', ['ui']);
 app.value('ui.config', {
     "sortable": {
         "axis": "y",
+        "placeholder": "sortable-placeholder"
     }
 });
 

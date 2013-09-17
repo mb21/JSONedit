@@ -152,4 +152,8 @@ ul.striped li.selected {
 .jsonView li li li li li li li {
     list-style-type: decimal;
 }
+.sortable-placeholder {
+    height: 20px;
+    display: block;
+}
 
