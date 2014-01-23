@@ -161,8 +161,8 @@ app.directive('json', function($compile, $timeout) {
             '<span ng-switch on="getType(val)" >'
                 + '<json ng-switch-when="Object" child="val" type="\'object\'"></json>'
                 + '<json ng-switch-when="Array" child="val" type="\'array\'"></json>'
-                + '<span ng-switch-when="String" class="jsonLiteral"><input type="text" ng-model="val" placeholder="Empty" ng-model-onblur ng-change="child[key] = val"></span>'
-                + '<span ng-switch-when="Number" class="jsonLiteral"><input type="number" ng-model="val" placeholder="Empty" ng-model-onblur ng-change="child[key] = parseFloat(val) || 0"/></span>'
+                + '<span ng-switch-when="String" class="jsonLiteral"><input type="text" ng-model="val" placeholder="Empty" ng-model-onblur ng-change="child[key] = val" class="input-small"></span>'
+                + '<span ng-switch-when="Number" class="jsonLiteral"><input type="number" ng-model="val" placeholder="Empty" ng-model-onblur ng-change="child[key] = parseFloat(val) || 0" class="input-small"></span>'
                 + '<span ng-switch-default>hi</span>'
             + '</span>';
         
@@ -217,7 +217,7 @@ app.directive('json', function($compile, $timeout) {
             var template = '<i ng-click="toggleCollapse()" ng-class="chevron" ng-init="chevron = \'icon-chevron-down\'"></i>'
             + '<span class="jsonItemDesc">'+arrayName+'</span>'
             + '<div class="jsonContents" ng-hide="collapsed">'
-                + '<ol class="arrayOl" ui-multi-sortable ng-model="child">'
+                + '<ol class="arrayOl" start="0" ui-multi-sortable ng-model="child">'
                     // repeat
                     + '<li class="arrayItem" ng-repeat="val in child" ng-init="key=$index">' //key needed in moveKey()
                         // delete button
