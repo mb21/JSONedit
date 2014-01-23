@@ -37,24 +37,31 @@ app.directive('json', function($compile, $timeout) {
     link: function(scope, element, attributes) {
         
         var stringName = "Text";
-        var objectName = "Catalog"; // or technically more correct: Map
-        var arrayName = "List";
-        var refName = "Reference";
+        var numberName = "Number";
+        var objectName = "Object"; 
+        var arrayName = "Array";
 
-        scope.valueTypes = [stringName, objectName, arrayName, refName];
+        scope.valueTypes = [stringName, numberName, objectName, arrayName];
 
         //////
         // Helper functions
         //////
 
         var getType = function(obj) {
+            if(obj == null) return "String";
+
             var type = Object.prototype.toString.call(obj);
             if (type === "[object Object]") {
                 return "Object";
             } else if(type === "[object Array]"){
                 return "Array";
+            } else if(type === "[object String]"){
+                return "String";
+            } else if(type === "[object Number]"){
+                return "Number";
             } else {
-                return "Literal";
+                console.error("Can't determine object type");
+                throw new Error("Can't determine object type");
             }
         };
         var isNumber = function(n) {
@@ -108,13 +115,13 @@ app.directive('json', function($compile, $timeout) {
                     }
                     // add item to object
                     switch(scope.valueType) {
-                        case stringName: obj[scope.keyName] = scope.valueName ? scope.possibleNumber(scope.valueName) : "";
+                        case stringName: obj[scope.keyName] = scope.valueName || "";
+                                        break;
+                        case numberName: obj[scope.keyName] = parseFloat(scope.valueName) || 0;
                                         break;
                         case objectName:  obj[scope.keyName] = {};
                                         break;
                         case arrayName:   obj[scope.keyName] = [];
-                                        break;
-                        case refName: obj[scope.keyName] = {"Reference!!!!": "todo"};
                                         break;
                     }
                     //clean-up
@@ -127,11 +134,11 @@ app.directive('json', function($compile, $timeout) {
                 switch(scope.valueType) {
                     case stringName: obj.push(scope.valueName ? scope.valueName : "");
                                     break;
+                    case numberName: obj.push(parseFloat(scope.valueName) || 0);
+                                    break;
                     case objectName:  obj.push({});
                                     break;
                     case arrayName:   obj.push([]);
-                                    break;
-                    case refName: obj.push({"Reference!!!!": "todo"});
                                     break;
                 }
                 scope.valueName = "";
@@ -139,9 +146,6 @@ app.directive('json', function($compile, $timeout) {
             } else {
                 console.error("object to add to was " + obj);
             }
-        };
-        scope.possibleNumber = function(val) {
-            return isNumber(val) ? parseFloat(val) : val;
         };
 
         //////
@@ -157,9 +161,9 @@ app.directive('json', function($compile, $timeout) {
             '<span ng-switch on="getType(val)" >'
                 + '<json ng-switch-when="Object" child="val" type="\'object\'"></json>'
                 + '<json ng-switch-when="Array" child="val" type="\'array\'"></json>'
-                + '<span ng-switch-default class="jsonLiteral"><input type="text" ng-model="val" '
-                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = possibleNumber(val)"/>'
-                + '</span>'
+                + '<span ng-switch-when="String" class="jsonLiteral"><input type="text" ng-model="val" placeholder="Empty" ng-model-onblur ng-change="child[key] = val" class="input-small"></span>'
+                + '<span ng-switch-when="Number" class="jsonLiteral"><input type="number" ng-model="val" placeholder="Empty" ng-model-onblur ng-change="child[key] = parseFloat(val) || 0" class="input-small"></span>'
+                + '<span ng-switch-default>hi</span>'
             + '</span>';
         
         // display either "plus button" or "key-value inputs"
@@ -176,7 +180,7 @@ app.directive('json', function($compile, $timeout) {
                 '<select ng-model="$parent.valueType" ng-options="option for option in valueTypes"'
                     + 'ng-init="$parent.valueType=\''+stringName+'\'" ui-keydown="{\'enter\':\'addItem(child)\'}"></select>'
                 // input value
-                + '<span ng-show="$parent.valueType == \''+stringName+'\'"> : <input type="text" placeholder="Value" '
+                + '<span ng-show="$parent.valueType == \''+stringName+'\' || $parent.valueType == \''+numberName+'\'"> : <input type="text" placeholder="Value" '
                     + 'class="input-medium addItemValueInput" ng-model="$parent.valueName" ui-keyup="{\'enter\':\'addItem(child)\'}"/></span> '
                 // Add button
                 + '<button class="btn btn-primary" ng-click="addItem(child)">Add</button> '
@@ -213,7 +217,7 @@ app.directive('json', function($compile, $timeout) {
             var template = '<i ng-click="toggleCollapse()" ng-class="chevron" ng-init="chevron = \'icon-chevron-down\'"></i>'
             + '<span class="jsonItemDesc">'+arrayName+'</span>'
             + '<div class="jsonContents" ng-hide="collapsed">'
-                + '<ol class="arrayOl" ui-multi-sortable ng-model="child">'
+                + '<ol class="arrayOl" start="0" ui-multi-sortable ng-model="child">'
                     // repeat
                     + '<li class="arrayItem" ng-repeat="val in child" ng-init="key=$index">' //key needed in moveKey()
                         // delete button

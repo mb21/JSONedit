@@ -1,0 +1,25 @@
+/* Styles for the index.html demo */
+
+.mainView {
+    margin: 30px auto;
+    width: 700px;
+}
+textarea {
+    width: 700px;
+    height: 400px;
+}
+
+ul.striped li {
+    background: #fff;
+    list-style:none;
+    padding: 10px 20px;
+}
+ul.striped li:nth-child(odd) {
+    background: #f3f6fa;
+}
+
+ul.striped li.selected {
+    background: -webkit-gradient(linear, left top, left bottom, from(#007ae3), to(#004cea));
+	background: -moz-linear-gradient(top, #007ae3, #004cea);
+    color: white;
+}

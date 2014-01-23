@@ -1,28 +1,3 @@
-.mainView {
-    margin: 30px auto;
-    width: 700px;
-}
-textarea {
-    width: 700px;
-    height: 400px;
-}
-
-ul.striped li {
-    background: #fff;
-    list-style:none;
-    padding: 10px 20px;
-}
-ul.striped li:nth-child(odd) {
-    background: #f3f6fa;
-}
-
-ul.striped li.selected {
-    background: -webkit-gradient(linear, left top, left bottom, from(#007ae3), to(#004cea));
-	background: -moz-linear-gradient(top, #007ae3, #004cea);
-    color: white;
-}
-
-
 /* JSON VIEW */
 
 /* striped background */
@@ -40,6 +15,12 @@ ul.striped li.selected {
     width: 100px;
 }
 .jsonView input[type="text"] {
+    margin: -1px 5px 0 -5px;
+    border: 0;
+    box-shadow: none;
+    background: none;
+}
+.jsonView input[type="number"] {
     margin: -1px 5px 0 -5px;
     border: 0;
     box-shadow: none;
@@ -132,24 +113,6 @@ ul.striped li.selected {
     font-family: Georgia, serif;
     margin: 0;
     line-height: 30px;
-    list-style-type: decimal;
-}
-.jsonView li li {
-    list-style-type: lower-roman;
-}
-.jsonView li li li {
-    list-style-type: upper-roman;
-}
-.jsonView li li li li {
-    list-style-type: lower-latin;
-}
-.jsonView li li li li li {
-    list-style-type: upper-latin;
-}
-.jsonView li li li li li li {
-    list-style-type: lower-greek;
-}
-.jsonView li li li li li li li {
     list-style-type: decimal;
 }
 .sortable-placeholder {
