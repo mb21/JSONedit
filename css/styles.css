@@ -45,6 +45,12 @@ ul.striped li.selected {
     box-shadow: none;
     background: none;
 }
+.jsonView input[type="number"] {
+    margin: -1px 5px 0 -5px;
+    border: 0;
+    box-shadow: none;
+    background: none;
+}
 .jsonView input.keyinput {
     font-weight: bold;
 }

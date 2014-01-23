@@ -48,6 +48,8 @@ app.directive('json', function($compile, $timeout) {
         //////
 
         var getType = function(obj) {
+            if(obj == null) return "String";
+
             var type = Object.prototype.toString.call(obj);
             if (type === "[object Object]") {
                 return "Object";
@@ -58,6 +60,7 @@ app.directive('json', function($compile, $timeout) {
             } else if(type === "[object Number]"){
                 return "Number";
             } else {
+                console.error("Can't determine object type");
                 throw new Error("Can't determine object type");
             }
         };
@@ -112,7 +115,7 @@ app.directive('json', function($compile, $timeout) {
                     }
                     // add item to object
                     switch(scope.valueType) {
-                        case stringName: obj[scope.keyName] = scope.valueName ? scope.possibleNumber(scope.valueName) : "";
+                        case stringName: obj[scope.keyName] = scope.valueName || "";
                                         break;
                         case numberName: obj[scope.keyName] = parseFloat(scope.valueName) || 0;
                                         break;
@@ -158,11 +161,9 @@ app.directive('json', function($compile, $timeout) {
             '<span ng-switch on="getType(val)" >'
                 + '<json ng-switch-when="Object" child="val" type="\'object\'"></json>'
                 + '<json ng-switch-when="Array" child="val" type="\'array\'"></json>'
-                + '<span ng-switch-when="String" class="jsonLiteral"><input type="text" ng-model="val" '
-                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = val"/>'
-                + '<span ng-switch-when="Number" class="jsonLiteral"><input type="number" ng-model="val" '
-                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = parseFloat(val)"/>'
-                + '</span>'
+                + '<span ng-switch-when="String" class="jsonLiteral"><input type="text" ng-model="val" placeholder="Empty" ng-model-onblur ng-change="child[key] = val"></span>'
+                + '<span ng-switch-when="Number" class="jsonLiteral"><input type="number" ng-model="val" placeholder="Empty" ng-model-onblur ng-change="child[key] = parseFloat(val) || 0"/></span>'
+                + '<span ng-switch-default>hi</span>'
             + '</span>';
         
         // display either "plus button" or "key-value inputs"
