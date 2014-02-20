@@ -32,7 +32,8 @@ app.directive('json', function($compile, $timeout) {
     restrict: 'E',
     scope: {
       child: '=',
-      type: '='
+      type: '=',
+      collapse : '='
     },
     link: function(scope, element, attributes) {
         
@@ -231,7 +232,10 @@ app.directive('json', function($compile, $timeout) {
 
         var newElement = angular.element(template);
         $compile(newElement)(scope);
-        element.replaceWith(newElement); 
+        element.replaceWith(newElement);
+
+        scope.collapsed = scope.collapse
+        scope.toggleCollapse()
     }
   };
 });
