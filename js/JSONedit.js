@@ -9,6 +9,11 @@ function MainViewCtrl($scope, $filter) {
         $scope.jsonString = $filter('json')(json);
     }, true);
     $scope.$watch('jsonString', function(json) {
-        $scope.jsonData = JSON.parse(json);
+        try {
+            $scope.jsonData = JSON.parse(json);
+            $scope.wellFormed = true;
+        } catch(e) {
+            $scope.wellFormed = false;
+        }
     }, true);
 }

@@ -26,6 +26,7 @@
         <h3>The JSON</h3>
         <div>
             <textarea ng-model="jsonString"></textarea>
+            <span class="red" ng-if="!wellFormed">JSON not well-formed!</span>
         </div>
 
     </div>

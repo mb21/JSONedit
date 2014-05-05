@@ -21,6 +21,9 @@ ul.striped li.selected {
 	background: -moz-linear-gradient(top, #007ae3, #004cea);
     color: white;
 }
+.red {
+    color: red;
+}
 
 
 /* JSON VIEW */
