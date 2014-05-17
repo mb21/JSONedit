@@ -91,6 +91,10 @@ app.directive('json', function($compile, $timeout) {
                 console.error("object to delete from was " + obj);
             }
         };
+        scope.duplicateKey = function(obj,key) {
+            nkey = key + '_dup';
+            obj[nkey] = obj[key];
+        };
         scope.addItem = function(obj) {
             if (getType(obj) == "Object") {
                 // check input for key
@@ -201,6 +205,8 @@ app.directive('json', function($compile, $timeout) {
                     + '<span class="jsonObjectKey">'
                         + '<input class="keyinput" type="text" ng-model="newkey" ng-init="newkey=key" '
                             + 'ng-change="moveKey(child, key, newkey)"/>'
+                        // dup button
+                        +  '<button ng-click="duplicateKey(child, key)">Dup</button>'
                         // delete button
                         + '<i class="deleteKeyBtn icon-trash" ng-click="deleteKey(child, key)"></i>'
                     + '</span>'
