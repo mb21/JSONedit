@@ -190,7 +190,7 @@ app.directive('json', function($compile, $timeout) {
                         + '<input class="keyinput" type="text"  ng-model="newkey" ng-init="newkey=key" '
                             + 'ng-blur="moveKey(child, key, newkey)"/>'
                         // dup button
-                        +  '<button ng-click="duplicateKey(child, key)">Dup</button>'
+                        +  '<i class="deleteKeyBtn icon-file" ng-click="duplicateKey(child, key)"></i>'
                         // delete button
                         + '<i class="deleteKeyBtn icon-trash" ng-click="deleteKey(child, key)"></i>'
                     + '</span>'
