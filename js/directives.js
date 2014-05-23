@@ -57,6 +57,8 @@ app.directive('json', function($compile, $timeout) {
         };
         scope.moveKey = function(obj, key, newkey) {
             //moves key to newkey in obj
+            if (key == newkey)
+                return
             obj[newkey] = obj[key];
             delete obj[key];
         };
