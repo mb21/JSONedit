@@ -8,24 +8,6 @@ app.value('ui.config', {
     }
 });
 
-// override the default input to update on blur
-// from http://jsfiddle.net/cn8VF/
-app.directive('ngModelOnblur', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, elm, attr, ngModelCtrl) {
-            if (attr.type === 'radio' || attr.type === 'checkbox') return;
-            
-            elm.unbind('input').unbind('keydown').unbind('change');
-            elm.bind('blur', function() {
-                scope.$apply(function() {
-                    ngModelCtrl.$setViewValue(elm.val());
-                });         
-            });
-        }
-    };
-});
 
 app.directive('json', function($compile, $timeout) {
   return {
@@ -75,6 +57,8 @@ app.directive('json', function($compile, $timeout) {
         };
         scope.moveKey = function(obj, key, newkey) {
             //moves key to newkey in obj
+            if (key == newkey)
+                return
             obj[newkey] = obj[key];
             delete obj[key];
         };
@@ -203,8 +187,8 @@ app.directive('json', function($compile, $timeout) {
                 + '<span class="block" ng-hide="key.indexOf(\'_\') == 0" ng-repeat="(key, val) in child">'
                     // object key
                     + '<span class="jsonObjectKey">'
-                        + '<input class="keyinput" type="text" ng-model="newkey" ng-init="newkey=key" '
-                            + 'ng-change="moveKey(child, key, newkey)"/>'
+                        + '<input class="keyinput" type="text"  ng-model="newkey" ng-init="newkey=key" '
+                            + 'ng-blur="moveKey(child, key, newkey)"/>'
                         // dup button
                         +  '<button ng-click="duplicateKey(child, key)">Dup</button>'
                         // delete button
