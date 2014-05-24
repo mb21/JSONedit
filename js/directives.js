@@ -87,7 +87,7 @@ app.directive('json', function($compile, $timeout) {
                     if (k == '$$hashKey') continue;
                     newObject[k] = obj[key][k];
                 }
-                obj.push(newObject)
+                obj.splice(key, 0, newObject)
             }
         };
         scope.addItem = function(obj) {
