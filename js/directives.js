@@ -76,8 +76,19 @@ app.directive('json', function($compile, $timeout) {
             }
         };
         scope.duplicateKey = function(obj,key) {
-            nkey = key + '_dup';
-            obj[nkey] = obj[key];
+            if (getType(obj) == "Object") {
+                nkey = key + '_dup';
+                obj[nkey] = obj[key];
+            } else if (getType(obj) == "Array") {
+                var newObject = {}
+                // newObject.id = obj[key].id
+                // newObject.type = obj[key].type
+                for (k in obj[key]) {
+                    if (k == '$$hashKey') continue;
+                    newObject[k] = obj[key][k];
+                }
+                obj.push(newObject)
+            }
         };
         scope.addItem = function(obj) {
             if (getType(obj) == "Object") {
@@ -208,6 +219,8 @@ app.directive('json', function($compile, $timeout) {
                     // repeat
                     + '<li class="arrayItem" ng-repeat="val in child" ng-init="key=$index">' //key needed in moveKey()
                         // delete button
+                        // dup button
+                        + '<i class="deleteKeyBtn icon-file" ng-click="duplicateKey(child, $index)"></i>'
                         + '<i class="deleteKeyBtn icon-trash" ng-click="deleteKey(child, $index)"></i>'
                         + '<i class="moveArrayItemBtn icon-align-justify"></i>'
                         + '<span>' + switchTemplate + '</span>'
