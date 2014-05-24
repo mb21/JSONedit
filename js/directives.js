@@ -1,4 +1,4 @@
-var app = angular.module('JSONedit', ['ui']);
+var app = angular.module('JSONedit', ['ui.sortable']);
 
 // fix ui-multi-sortable to y-axis
 app.value('ui.config', {
@@ -204,7 +204,7 @@ app.directive('json', function($compile, $timeout) {
             var template = '<i ng-click="toggleCollapse()" ng-class="chevron" ng-init="chevron = \'icon-chevron-down\'"></i>'
             + '<span class="jsonItemDesc">'+arrayName+'</span>'
             + '<div class="jsonContents" ng-hide="collapsed">'
-                + '<ol class="arrayOl" ui-multi-sortable ng-model="child">'
+                + '<ol class="arrayOl"  ui-sortable ng-model="child">'
                     // repeat
                     + '<li class="arrayItem" ng-repeat="val in child" ng-init="key=$index">' //key needed in moveKey()
                         // delete button
