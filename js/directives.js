@@ -1,4 +1,4 @@
-var app = angular.module('JSONedit', ['ui']);
+var app = angular.module('JSONedit', ['ui.sortable']);
 
 // fix ui-multi-sortable to y-axis
 app.value('ui.config', {
@@ -8,31 +8,14 @@ app.value('ui.config', {
     }
 });
 
-// override the default input to update on blur
-// from http://jsfiddle.net/cn8VF/
-app.directive('ngModelOnblur', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, elm, attr, ngModelCtrl) {
-            if (attr.type === 'radio' || attr.type === 'checkbox') return;
-            
-            elm.unbind('input').unbind('keydown').unbind('change');
-            elm.bind('blur', function() {
-                scope.$apply(function() {
-                    ngModelCtrl.$setViewValue(elm.val());
-                });         
-            });
-        }
-    };
-});
 
 app.directive('json', function($compile, $timeout) {
   return {
     restrict: 'E',
     scope: {
       child: '=',
-      type: '='
+      type: '=',
+      collapse : '='
     },
     link: function(scope, element, attributes) {
         
@@ -74,6 +57,8 @@ app.directive('json', function($compile, $timeout) {
         };
         scope.moveKey = function(obj, key, newkey) {
             //moves key to newkey in obj
+            if (key == newkey)
+                return
             obj[newkey] = obj[key];
             delete obj[key];
         };
@@ -88,6 +73,22 @@ app.directive('json', function($compile, $timeout) {
                 }
             } else {
                 console.error("object to delete from was " + obj);
+            }
+        };
+        scope.duplicateKey = function(obj,key) {
+            if (getType(obj) == "Object") {
+                nkey = key + '_dup';
+                var newObject = jQuery.extend(true, {}, obj[key]);
+                obj[nkey] = newObject;
+            } else if (getType(obj) == "Array") {
+                var newObject = {}
+                // newObject.id = obj[key].id
+                // newObject.type = obj[key].type
+                for (k in obj[key]) {
+                    if (k == '$$hashKey') continue;
+                    newObject[k] = obj[key][k];
+                }
+                obj.splice(key, 0, newObject)
             }
         };
         scope.addItem = function(obj) {
@@ -198,8 +199,10 @@ app.directive('json', function($compile, $timeout) {
                 + '<span class="block" ng-hide="key.indexOf(\'_\') == 0" ng-repeat="(key, val) in child">'
                     // object key
                     + '<span class="jsonObjectKey">'
-                        + '<input class="keyinput" type="text" ng-model="newkey" ng-init="newkey=key" '
-                            + 'ng-change="moveKey(child, key, newkey)"/>'
+                        + '<input class="keyinput" type="text"  ng-model="newkey" ng-init="newkey=key" '
+                            + 'ng-blur="moveKey(child, key, newkey)"/>'
+                        // dup button
+                        +  '<i class="deleteKeyBtn icon-file" ng-click="duplicateKey(child, key)"></i>'
                         // delete button
                         + '<i class="deleteKeyBtn icon-trash" ng-click="deleteKey(child, key)"></i>'
                     + '</span>'
@@ -213,10 +216,12 @@ app.directive('json', function($compile, $timeout) {
             var template = '<i ng-click="toggleCollapse()" ng-class="chevron" ng-init="chevron = \'icon-chevron-down\'"></i>'
             + '<span class="jsonItemDesc">'+arrayName+'</span>'
             + '<div class="jsonContents" ng-hide="collapsed">'
-                + '<ol class="arrayOl" ui-multi-sortable ng-model="child">'
+                + '<ol class="arrayOl"  ui-sortable ng-model="child">'
                     // repeat
                     + '<li class="arrayItem" ng-repeat="val in child" ng-init="key=$index">' //key needed in moveKey()
                         // delete button
+                        // dup button
+                        + '<i class="deleteKeyBtn icon-file" ng-click="duplicateKey(child, $index)"></i>'
                         + '<i class="deleteKeyBtn icon-trash" ng-click="deleteKey(child, $index)"></i>'
                         + '<i class="moveArrayItemBtn icon-align-justify"></i>'
                         + '<span>' + switchTemplate + '</span>'
@@ -231,7 +236,10 @@ app.directive('json', function($compile, $timeout) {
 
         var newElement = angular.element(template);
         $compile(newElement)(scope);
-        element.replaceWith(newElement); 
+        element.replaceWith(newElement);
+
+        scope.collapsed = scope.collapse
+        scope.toggleCollapse()
     }
   };
 });
