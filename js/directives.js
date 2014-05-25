@@ -78,7 +78,8 @@ app.directive('json', function($compile, $timeout) {
         scope.duplicateKey = function(obj,key) {
             if (getType(obj) == "Object") {
                 nkey = key + '_dup';
-                obj[nkey] = obj[key];
+                var newObject = jQuery.extend(true, {}, obj[key]);
+                obj[nkey] = newObject;
             } else if (getType(obj) == "Array") {
                 var newObject = {}
                 // newObject.id = obj[key].id
