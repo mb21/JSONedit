@@ -27,6 +27,17 @@ app.directive('ngModelOnblur', function() {
     };
 });
 
+// directive to focus an input element
+// usage: <input type="text" focus />
+//app.directive('focus', function() {
+//    return {
+//        restrict: 'A',
+//        link: function(scope, element, attributes) {
+//            element[0].focus();
+//        }
+//    }
+//});
+
 app.directive('json', function($compile, $timeout) {
   return {
     restrict: 'E',
@@ -215,7 +226,7 @@ app.directive('json', function($compile, $timeout) {
             + '<div class="jsonContents" ng-hide="collapsed">'
                 + '<ol class="arrayOl" ui-multi-sortable ng-model="child">'
                     // repeat
-                    + '<li class="arrayItem" ng-repeat="val in child" ng-init="key=$index">' //key needed in moveKey()
+                    + '<li class="arrayItem" ng-repeat="val in child">'
                         // delete button
                         + '<i class="deleteKeyBtn icon-trash" ng-click="deleteKey(child, $index)"></i>'
                         + '<i class="moveArrayItemBtn icon-align-justify"></i>'
