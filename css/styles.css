@@ -1,25 +1,10 @@
-.mainView {
+#mainView {
     margin: 30px auto;
     width: 700px;
 }
-textarea {
+#jsonTextarea {
     width: 700px;
-    height: 400px;
-}
-
-ul.striped li {
-    background: #fff;
-    list-style:none;
-    padding: 10px 20px;
-}
-ul.striped li:nth-child(odd) {
-    background: #f3f6fa;
-}
-
-ul.striped li.selected {
-    background: -webkit-gradient(linear, left top, left bottom, from(#007ae3), to(#004cea));
-	background: -moz-linear-gradient(top, #007ae3, #004cea);
-    color: white;
+    height: 300px;
 }
 .red {
     color: red;
@@ -31,25 +16,33 @@ ul.striped li.selected {
 /* striped background */
 .jsonView {
     background-color: #f3f6fa;
-    background-image: -webkit-linear-gradient(rgba(255, 255, 255, 1) 50%, transparent 50%, transparent);
+    background-image: linear-gradient(rgba(255, 255, 255, 1) 50%, transparent 50%, transparent);
     background-size: 60px 60px;
     padding: 30px 0 0 5px;
 }
-
 /* inputs */
-.jsonView select {
+.jsonView select.form-control {
     margin: 0;
     padding: 0;
+}
+.jsonView select.form-control, .jsonView input.form-control {
     width: 100px;
+    display: inline;
+    height: 29px;
+    padding-left: 5px;
 }
 .jsonView input[type="text"] {
-    margin: -1px 5px 0 -5px;
+    margin: 0;
     border: 0;
-    box-shadow: none;
     background: none;
 }
 .jsonView input.keyinput {
     font-weight: bold;
+}
+.jsonView input {
+    height: 30px;
+    margin: 0;
+    padding: 0;
 }
 .jsonView input[type="text"].addItemKeyInput, .jsonView input[type="text"].addItemValueInput {
     border: 1px solid #ccc;
@@ -61,22 +54,28 @@ ul.striped li.selected {
 }
 
 /* chevrons */
-.jsonView .icon-chevron-right, .jsonView .icon-chevron-down {
+.jsonView .glyphicon-chevron-right, .jsonView .glyphicon-chevron-down {
     float: left;
     cursor: pointer;
     position: relative;
-    top: 5px;
-    right: 20px;
+    top: 7px;
+    right: 22px;
     margin-right: -15px;
 }
-.jsonView > .icon-chevron-down {
+.jsonView > .glyphicon-chevron-down {
     display: none;
 }
 /* add and delete */
 .jsonView .addObjectItemBtn {
     background-color: transparent;
     border-color: transparent;
-    line-height: 10px;
+    padding: 0;
+    border: 0;
+    height: 30px;
+    display: block;
+}
+.jsonView .addObjectItemBtn i {
+    display: block;
 }
 .jsonView .deleteKeyBtn, .jsonView .moveArrayItemBtn {
     float: right;
@@ -90,23 +89,19 @@ ul.striped li.selected {
 /* basic layout */
 .jsonView .jsonObjectKey {
     font-weight: bold;
-    cursor: select;
 }
 .jsonContents {
     margin-left: 25px;
 }
 .jsonView .block {
     display: block;
-    line-height: 30px;
-    min-height: 30px;
 }
-.jsonView .brace, .jsonItemDesc {
+.jsonView .jsonItemDesc {
     font-family: Georgia, serif;
     color: grey;
-}
-.jsonItemDesc {
     font-style: italic;
     cursor: default;
+    line-height: 30px
 }
 .jsonView .objectDesc {
     cursor: default;
@@ -123,20 +118,27 @@ ul.striped li.selected {
 
 /* array numbering */
 .jsonView ol.arrayOl {
-    margin: 0 0 0 25px;
+    margin: 0;
+    padding-left: 25px;
 }
-.jsonView ol.arrayOl > li > span > span > .icon-chevron-down,
-.jsonView ol.arrayOl > li > span > span > .icon-chevron-right {
+.jsonView ol.arrayOl > li > span > span > .glyphicon-chevron-down,
+.jsonView ol.arrayOl > li > span > span > .glyphicon-chevron-right {
     left: -40px;
 }
-.jsonView li {
+.jsonView ol.arrayOl li {
     color: grey;
     font-style: italic;
     font-family: Georgia, serif;
-    margin: 0;
-    line-height: 30px;
     list-style-type: decimal;
 }
+.jsonView ol.arrayOl li input, .jsonView li select, .jsonView li button {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-style: normal;
+}
+.jsonView ol.arrayOl li *:not(.btn):not(.jsonItemDesc) {
+    color: black;
+}
+
 .jsonView li li {
     list-style-type: lower-roman;
 }

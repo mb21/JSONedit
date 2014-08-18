@@ -1,12 +1,11 @@
 <!doctype html>
 <html ng-app="JSONedit">
 <head>
-    <script src="lib/jquery.min.js"></script>
-    <script src="lib/jquery-ui/js/jquery-ui.min.js"></script>
-    <script src="lib/angular.min.js"></script>
-    <script src="lib/angular-ui/angular-ui.js"></script>
-    <script src="lib/angular-ui/multiSortable.js"></script>
-    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
     <script src="js/directives.js"></script>
     <script src="js/JSONedit.js"></script>
@@ -15,19 +14,19 @@
 <body>
     <a href="https://github.com/mb21/JSONedit"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
 
-    <div class="mainView" ng-controller="MainViewCtrl">
-
+    <div id="mainView" ng-controller="MainViewCtrl">
         <h2>JSONedit</h2>
-        <h3>The Editor</h3>
+
         <div class="jsonView" defocus>
             <json child="jsonData" type="'object'"></json>
         </div>
 
-        <h3>The JSON</h3>
+        <hr>
         <div>
-            <textarea ng-model="jsonString"></textarea>
+            <textarea id="jsonTextarea" ng-model="jsonString"></textarea>
             <span class="red" ng-if="!wellFormed">JSON not well-formed!</span>
         </div>
+  </div>
 
     </div>
 </body>

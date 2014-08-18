@@ -1,0 +1,14 @@
+{
+  "name": "JSONedit",
+  "version": "0.2.0",
+  "description": "User friendly, visual JSON editor built as an AngularJS directive. Provides a basic GUI to edit JSON.",
+  "repository": "https://github.com/mb21/JSONedit",
+  "homepage": "http://mb21.github.io/JSONedit/",
+  "license": "MIT License",
+  "dependencies": {
+      "bootstrap": "3.x.x",
+      "angular": "1.2.x",
+      "angular-ui-sortable": "0.12.x"
+  }
+}
+
