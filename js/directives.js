@@ -22,7 +22,8 @@ angular.module('JSONedit', ['ui.sortable'])
     restrict: 'E',
     scope: {
       child: '=',
-      type: '='
+      type: '@',
+      defaultCollapsed: '='
     },
     link: function(scope, element, attributes) {
         var stringName = "Text";
@@ -34,6 +35,16 @@ angular.module('JSONedit', ['ui.sortable'])
         scope.sortableOptions = {
             axis: 'y'
         };
+        if (scope.$parent.defaultCollapsed === undefined) {
+            scope.collapsed = false;
+        } else {
+            scope.collapsed = scope.$parent.defaultCollapsed;
+        }
+        if (scope.collapsed) {
+            scope.chevron = "glyphicon-chevron-right";
+        } else {
+            scope.chevron = "glyphicon-chevron-down";
+        }
         
 
         //////
@@ -150,8 +161,8 @@ angular.module('JSONedit', ['ui.sortable'])
         // recursion
         var switchTemplate = 
             '<span ng-switch on="getType(val)" >'
-                + '<json ng-switch-when="Object" child="val" type="\'object\'"></json>'
-                + '<json ng-switch-when="Array" child="val" type="\'array\'"></json>'
+                + '<json ng-switch-when="Object" child="val" type="object"></json>'
+                + '<json ng-switch-when="Array" child="val" type="array"></json>'
                 + '<span ng-switch-default class="jsonLiteral"><input type="text" ng-model="val" '
                     + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = possibleNumber(val)"/>'
                 + '</span>'
@@ -185,8 +196,7 @@ angular.module('JSONedit', ['ui.sortable'])
     
         // start template
         if (scope.type == "object"){
-            var template = '<i ng-click="toggleCollapse()" class="glyphicon" ng-class="chevron"'
-            + ' ng-init="chevron = \'glyphicon-chevron-down\'"></i>'
+            var template = '<i ng-click="toggleCollapse()" class="glyphicon" ng-class="chevron"></i>'
             + '<span class="jsonItemDesc">'+objectName+'</span>'
             + '<div class="jsonContents" ng-hide="collapsed">'
                 // repeat
@@ -206,7 +216,7 @@ angular.module('JSONedit', ['ui.sortable'])
             + '</div>';
         } else if (scope.type == "array") {
             var template = '<i ng-click="toggleCollapse()" class="glyphicon"'
-            + 'ng-class="chevron" ng-init="chevron = \'glyphicon-chevron-down\'"></i>'
+            + 'ng-class="chevron"></i>'
             + '<span class="jsonItemDesc">'+arrayName+'</span>'
             + '<div class="jsonContents" ng-hide="collapsed">'
                 + '<ol class="arrayOl" ui-sortable="sortableOptions" ng-model="child">'
