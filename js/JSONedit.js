@@ -1,3 +1,5 @@
+var app = angular.module('exampleApp', ['JSONedit']);
+
 function MainViewCtrl($scope, $filter) {
 
     // example JSON

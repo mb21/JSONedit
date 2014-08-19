@@ -1,9 +1,7 @@
-var app = angular.module('JSONedit', ['ui.sortable']);
-
-
-// override the default input to update on blur
-// from http://jsfiddle.net/cn8VF/
-app.directive('ngModelOnblur', function() {
+angular.module('JSONedit', ['ui.sortable'])
+.directive('ngModelOnblur', function() {
+    // override the default input to update on blur
+    // from http://jsfiddle.net/cn8VF/
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -18,9 +16,8 @@ app.directive('ngModelOnblur', function() {
             });
         }
     };
-});
-
-app.directive('json', function($compile, $timeout) {
+})
+.directive('json', function($compile, $timeout) {
   return {
     restrict: 'E',
     scope: {
@@ -29,7 +26,7 @@ app.directive('json', function($compile, $timeout) {
     },
     link: function(scope, element, attributes) {
         var stringName = "Text";
-        var objectName = "Object"; // or technically more correct: Map
+        var objectName = "Object";
         var arrayName = "Array";
         var refName = "Reference";
 
@@ -234,3 +231,4 @@ app.directive('json', function($compile, $timeout) {
     }
   };
 });
+
