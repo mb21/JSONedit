@@ -19,6 +19,7 @@
     background-image: linear-gradient(rgba(255, 255, 255, 1) 50%, transparent 50%, transparent);
     background-size: 60px 60px;
     padding: 30px 0 0 5px;
+    background-attachment: local;
 }
 /* inputs */
 .jsonView select.form-control {

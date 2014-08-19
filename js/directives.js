@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('JSONedit', ['ui.sortable'])
 .directive('ngModelOnblur', function() {
     // override the default input to update on blur
