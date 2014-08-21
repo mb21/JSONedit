@@ -5,6 +5,8 @@
   "repository": "https://github.com/mb21/JSONedit",
   "homepage": "http://mb21.github.io/JSONedit/",
   "license": "MIT License",
+  "main": ["css/styles.css", "js/directives.js"],
+  "ignore": ["index.html", "js/JSONedit.js"],
   "dependencies": {
       "bootstrap": "3.x.x",
       "angular": "1.2.x",
