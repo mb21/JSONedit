@@ -63,7 +63,7 @@
     right: 22px;
     margin-right: -15px;
 }
-.jsonView > .glyphicon-chevron-down {
+.jsonView > json > .glyphicon-chevron-down {
     display: none;
 }
 /* add and delete */
@@ -108,7 +108,7 @@
     cursor: default;
 }
 /* first brace */
-.jsonView > .jsonItemDesc {
+.jsonView > json > .jsonItemDesc {
     display: block;
     float: left;
     position: relative;
@@ -122,8 +122,8 @@
     margin: 0;
     padding-left: 25px;
 }
-.jsonView ol.arrayOl > li > span > span > .glyphicon-chevron-down,
-.jsonView ol.arrayOl > li > span > span > .glyphicon-chevron-right {
+.jsonView ol.arrayOl > li > span > span > json > .glyphicon-chevron-down,
+.jsonView ol.arrayOl > li > span > span > json > .glyphicon-chevron-right {
     left: -40px;
 }
 .jsonView ol.arrayOl li {

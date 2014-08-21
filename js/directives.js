@@ -19,7 +19,7 @@ angular.module('JSONedit', ['ui.sortable'])
         }
     };
 })
-.directive('json', function($compile, $timeout) {
+.directive('json', function($compile) {
   return {
     restrict: 'E',
     scope: {
@@ -239,7 +239,7 @@ angular.module('JSONedit', ['ui.sortable'])
 
         var newElement = angular.element(template);
         $compile(newElement)(scope);
-        element.replaceWith(newElement); 
+        element.empty().html(newElement); 
     }
   };
 });
