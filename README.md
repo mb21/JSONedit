@@ -9,17 +9,19 @@ User friendly, visual JSON editor built as an AngularJS directive. Provides a ba
 ```javascript
 // require module in your app:
 var app = angular.module('exampleApp', ['JSONedit']);
+```
 
-// use somewhere in your template
+```html
+<!-- use somewhere in your template -->
 <div class="jsonView">
     <json child="myJson" default-collapsed="false" type="object"></json>
 </div>
 
-// include JSONedit files
+<!-- include JSONedit files -->
 <script src="bower_components/JSONedit/js/directives.js"></script>
 <link  href="bower_components/JSONedit/css/styles.css" rel="stylesheet" type="text/css" />
 
-// include the dependencies in this order (if you don't already have them)
+<!-- include the dependencies in this order (if you don't already have them) -->
 <script src="bower_components/JSONedit/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/JSONedit/bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script src="bower_components/JSONedit/bower_components/angular/angular.min.js"></script>
