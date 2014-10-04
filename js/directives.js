@@ -239,8 +239,7 @@ angular.module('JSONedit', ['ui.sortable'])
 
         var newElement = angular.element(template);
         $compile(newElement)(scope);
-        element.empty().html(newElement); 
+        element.replaceWith ( newElement );
     }
   };
 });
-
