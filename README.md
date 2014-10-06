@@ -6,6 +6,8 @@ User friendly, visual JSON editor built as an AngularJS directive. Provides a ba
 
 #### Use as Angular module
 
+    $ bower install json-edit
+
 ```javascript
 // require module in your app:
 var app = angular.module('exampleApp', ['JSONedit']);
