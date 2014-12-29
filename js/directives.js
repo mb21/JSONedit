@@ -19,7 +19,7 @@ angular.module('JSONedit', ['ui.sortable'])
         }
     };
 })
-.directive('json', function($compile) {
+.directive('json', ["$compile", function($compile) {
   return {
     restrict: 'E',
     scope: {
@@ -242,4 +242,4 @@ angular.module('JSONedit', ['ui.sortable'])
         element.replaceWith ( newElement );
     }
   };
-});
+}]);
