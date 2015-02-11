@@ -32,8 +32,9 @@ angular.module('JSONedit', ['ui.sortable'])
         var objectName = "Object";
         var arrayName = "Array";
         var refName = "Reference";
+        var boolName = "Boolean"
 
-        scope.valueTypes = [stringName, objectName, arrayName, refName];
+        scope.valueTypes = [stringName, objectName, arrayName, refName, boolName];
         scope.sortableOptions = {
             axis: 'y'
         };
@@ -59,6 +60,8 @@ angular.module('JSONedit', ['ui.sortable'])
                 return "Object";
             } else if(type === "[object Array]"){
                 return "Array";
+            } else if(type === "[object Boolean]"){
+                return "Boolean";
             } else {
                 return "Literal";
             }
@@ -124,6 +127,8 @@ angular.module('JSONedit', ['ui.sortable'])
                                         break;
                         case refName: obj[scope.keyName] = {"Reference!!!!": "todo"};
                                         break;
+                        case boolName: obj[scope.keyName] = false;
+                                        break;
                     }
                     //clean-up
                     scope.keyName = "";
@@ -138,6 +143,8 @@ angular.module('JSONedit', ['ui.sortable'])
                     case objectName:  obj.push({});
                                     break;
                     case arrayName:   obj.push([]);
+                                    break;
+                    case boolName:   obj.push(false);
                                     break;
                     case refName: obj.push({"Reference!!!!": "todo"});
                                     break;
@@ -158,13 +165,16 @@ angular.module('JSONedit', ['ui.sortable'])
 
         // Note:
         // sometimes having a different ng-model and then saving it on ng-change
-        // into the object or array is necesarry for all updates to work
+        // into the object or array is necessary for all updates to work
         
         // recursion
         var switchTemplate = 
             '<span ng-switch on="getType(val)" >'
                 + '<json ng-switch-when="Object" child="val" type="object" default-collapsed="defaultCollapsed"></json>'
                 + '<json ng-switch-when="Array" child="val" type="array" default-collapsed="defaultCollapsed"></json>'
+                + '<span ng-switch-when="Boolean" type="boolean">'
+                    + '<input type="checkbox" ng-model="val" ng-model-onblur ng-change="child[key] = val">'
+                + '</span>'
                 + '<span ng-switch-default class="jsonLiteral"><input type="text" ng-model="val" '
                     + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = possibleNumber(val)"/>'
                 + '</span>'
