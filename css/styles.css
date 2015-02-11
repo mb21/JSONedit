@@ -37,6 +37,10 @@
     border: 0;
     background: none;
 }
+.jsonView input[type="checkbox"] {
+    position: absolute;
+    top: 1px;
+}
 .jsonView input.keyinput {
     font-weight: bold;
 }
