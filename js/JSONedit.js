@@ -9,6 +9,10 @@ function MainViewCtrl($scope, $filter) {
         Name: "Joe", "Last Name": "Miller", Address: {Street: "Neverland 42"}, Hobbies: ["doing stuff", "dreaming"]
     };
 
+    $scope.showJsonString = function () {
+        alert($scope.jsonString);
+    };
+
     $scope.$watch('jsonData', function(json) {
         $scope.jsonString = $filter('json')(json);
     }, true);

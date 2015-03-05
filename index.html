@@ -18,13 +18,14 @@
         <h2>JSONedit</h2>
 
         <div class="jsonView">
-            <json child="jsonData" default-collapsed="false" type="object"></json>
+            <json child="jsonData" json-change-key="true" json-change-order="true" json-add="true" json-delete="true" default-collapsed="false" type="object"></json>
         </div>
 
         <hr>
         <div>
             <textarea id="jsonTextarea" ng-model="jsonString"></textarea>
             <span class="red" ng-if="!wellFormed">JSON not well-formed!</span>
+            <button ng-click="showJsonString()">btn</button>
         </div>
   </div>
 
