@@ -6,7 +6,23 @@ function MainViewCtrl($scope, $filter) {
 
     // example JSON
     $scope.jsonData = {
-        Name: "Joe", "Last Name": "Miller", Address: {Street: "Neverland 42"}, Hobbies: ["doing stuff", "dreaming"]
+        x:
+            {
+                x:
+                    {
+                        x: 
+                            {
+                                x:
+                                    {
+                                        x:
+                                            {
+                                                x:[true,false,3,4,5]
+                                            }
+                                    }
+                            }
+                    }
+            },
+        Name: "Joe", "Last Name": "Miller", Address: { Street: "Neverland 42" }, Hobbies: ["doing stuff", "dreaming"]
     };
 
     $scope.showJsonString = function () {

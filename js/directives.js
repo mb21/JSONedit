@@ -25,7 +25,7 @@ angular.module('JSONedit', ['ui.sortable'])
     scope: {
       child: '=',
       type: '@',
-      defaultCollapsed: '=',
+      expandedLevel: '=',
       jsonAdd: '=',
       jsonDelete: '=',
       jsonChangeOrder: '=',
@@ -42,10 +42,10 @@ angular.module('JSONedit', ['ui.sortable'])
         scope.sortableOptions = {
             axis: 'y'
         };
-        if (scope.$parent.defaultCollapsed === undefined) {
+        if (scope.$parent.expandedLevel === undefined) {
             scope.collapsed = false;
         } else {
-            scope.collapsed = scope.defaultCollapsed;
+            scope.collapsed = scope.expandedLevel>0?false:true;
         }
         if (scope.collapsed) {
             scope.chevron = "glyphicon-chevron-right";
@@ -160,8 +160,11 @@ angular.module('JSONedit', ['ui.sortable'])
             }
         };
 
-        scope.possibleNumber = function (val) {
-            return isNumber(val) ? parseFloat(val) : val;
+        scope.possibleNumber = function (val,oldVal) {
+            if (typeof oldVal == "number")
+                return isNumber(val) ? parseFloat(val) : val;
+            else
+                return val;
         };
 
         //////
@@ -175,13 +178,13 @@ angular.module('JSONedit', ['ui.sortable'])
         // recursion
         var switchTemplate = 
             '<span ng-switch on="getType(val)" >'
-                + '<json ng-switch-when="Object" child="val" type="object" json-change-key="jsonChangeKey" json-change-order="jsonChangeOrder" json-delete="jsonDelete" json-add="jsonAdd" default-collapsed="defaultCollapsed"></json>'
-                + '<json ng-switch-when="Array" child="val" type="array" json-change-key="jsonChangeKey" json-change-order="jsonChangeOrder" json-delete="jsonDelete" json-add="jsonAdd" default-collapsed="defaultCollapsed"></json>'
+                + '<json ng-switch-when="Object" child="val" type="object" json-change-key="jsonChangeKey" json-change-order="jsonChangeOrder" json-delete="jsonDelete" json-add="jsonAdd" expanded-level="expandedLevel-1"></json>'
+                + '<json ng-switch-when="Array" child="val" type="array" json-change-key="jsonChangeKey" json-change-order="jsonChangeOrder" json-delete="jsonDelete" json-add="jsonAdd" expanded-level="expandedLevel-1"></json>'
                 + '<span ng-switch-when="Boolean" type="boolean">'
                     + '<input type="checkbox" ng-model="val" ng-model-onblur ng-change="child[key] = val">'
                 + '</span>'
                 + '<span ng-switch-default class="jsonLiteral"><input type="text" ng-model="val" '
-                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = possibleNumber(val)"/>'
+                    + 'placeholder="Empty" ng-blur="child[key] = possibleNumber(val,child[key])"/>'
                 + '</span>'
             + '</span>';
         
