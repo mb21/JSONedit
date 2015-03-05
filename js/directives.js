@@ -160,7 +160,7 @@ angular.module('JSONedit', ['ui.sortable'])
             }
         };
 
-        scope.possibleNumber = function (val,child,key) {
+        scope.possibleNumber = function (val) {
             return isNumber(val) ? parseFloat(val) : val;
         };
 
@@ -181,7 +181,7 @@ angular.module('JSONedit', ['ui.sortable'])
                     + '<input type="checkbox" ng-model="val" ng-model-onblur ng-change="child[key] = val">'
                 + '</span>'
                 + '<span ng-switch-default class="jsonLiteral"><input type="text" ng-model="val" '
-                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = possibleNumber(val,child,key)"/>'
+                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = possibleNumber(val)"/>'
                 + '</span>'
             + '</span>';
         
