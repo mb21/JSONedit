@@ -25,8 +25,12 @@ angular.module('JSONedit', ['ui.sortable'])
     scope: {
       child: '=',
       type: '@',
-      defaultCollapsed: '='
-    },
+      expandedLevel: '=',
+      jsonAdd: '=',
+      jsonDelete: '=',
+      jsonChangeOrder: '=',
+      jsonChangeKey: '='
+  },
     link: function(scope, element, attributes) {
         var stringName = "Text";
         var objectName = "Object";
@@ -38,10 +42,10 @@ angular.module('JSONedit', ['ui.sortable'])
         scope.sortableOptions = {
             axis: 'y'
         };
-        if (scope.$parent.defaultCollapsed === undefined) {
+        if (scope.$parent.expandedLevel === undefined) {
             scope.collapsed = false;
         } else {
-            scope.collapsed = scope.defaultCollapsed;
+            scope.collapsed = scope.expandedLevel>0?false:true;
         }
         if (scope.collapsed) {
             scope.chevron = "glyphicon-chevron-right";
@@ -155,8 +159,12 @@ angular.module('JSONedit', ['ui.sortable'])
                 console.error("object to add to was " + obj);
             }
         };
-        scope.possibleNumber = function(val) {
-            return isNumber(val) ? parseFloat(val) : val;
+
+        scope.possibleNumber = function (val,oldVal) {
+            if (typeof oldVal == "number")
+                return isNumber(val) ? parseFloat(val) : val;
+            else
+                return val;
         };
 
         //////
@@ -170,13 +178,13 @@ angular.module('JSONedit', ['ui.sortable'])
         // recursion
         var switchTemplate = 
             '<span ng-switch on="getType(val)" >'
-                + '<json ng-switch-when="Object" child="val" type="object" default-collapsed="defaultCollapsed"></json>'
-                + '<json ng-switch-when="Array" child="val" type="array" default-collapsed="defaultCollapsed"></json>'
+                + '<json ng-switch-when="Object" child="val" type="object" json-change-key="jsonChangeKey" json-change-order="jsonChangeOrder" json-delete="jsonDelete" json-add="jsonAdd" expanded-level="expandedLevel-1"></json>'
+                + '<json ng-switch-when="Array" child="val" type="array" json-change-key="jsonChangeKey" json-change-order="jsonChangeOrder" json-delete="jsonDelete" json-add="jsonAdd" expanded-level="expandedLevel-1"></json>'
                 + '<span ng-switch-when="Boolean" type="boolean">'
                     + '<input type="checkbox" ng-model="val" ng-model-onblur ng-change="child[key] = val">'
                 + '</span>'
                 + '<span ng-switch-default class="jsonLiteral"><input type="text" ng-model="val" '
-                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = possibleNumber(val)"/>'
+                    + 'placeholder="Empty" ng-blur="child[key] = possibleNumber(val,child[key])"/>'
                 + '</span>'
             + '</span>';
         
@@ -185,9 +193,10 @@ angular.module('JSONedit', ['ui.sortable'])
         '<div ng-switch on="showAddKey" class="block" >'
             + '<span ng-switch-when="true">';
                 if (scope.type == "object"){
-                   // input key
-                    addItemTemplate += '<input placeholder="Name" type="text" ui-keyup="{\'enter\':\'addItem(child)\'}" '
-                        + 'class="form-control input-sm addItemKeyInput" ng-model="$parent.keyName" /> ';
+                    // input key
+                        addItemTemplate += '<input placeholder="Name" type="text" ui-keyup="{\'enter\':\'addItem(child)\'}" '
+                            + 'class="form-control input-sm addItemKeyInput" ng-model="$parent.keyName" /> ';
+
                 }
                 addItemTemplate += 
                 // value type dropdown
@@ -202,10 +211,11 @@ angular.module('JSONedit', ['ui.sortable'])
             + '</span>'
             + '<span ng-switch-default>'
                 // plus button
-                + '<button class="addObjectItemBtn" ng-click="$parent.showAddKey = true"><i class="glyphicon glyphicon-plus"></i></button>'
+                + '<button ng-show="$parent.jsonAdd" class="addObjectItemBtn" ng-click="$parent.showAddKey = true"><i class="glyphicon glyphicon-plus"></i></button>'
             + '</span>'
         + '</div>';
     
+
         // start template
         if (scope.type == "object"){
             var template = '<i ng-click="toggleCollapse()" class="glyphicon" ng-class="chevron"></i>'
@@ -215,10 +225,10 @@ angular.module('JSONedit', ['ui.sortable'])
                 + '<span class="block" ng-hide="key.indexOf(\'_\') == 0" ng-repeat="(key, val) in child">'
                     // object key
                     + '<span class="jsonObjectKey">'
-                        + '<input class="keyinput" type="text" ng-model="newkey" ng-init="newkey=key" '
+                        + '<input ' + (scope.jsonChangeKey?'':'readonly') + ' class="keyinput" type="text" ng-model="newkey" ng-init="newkey=key" '
                             + 'ng-blur="moveKey(child, key, newkey)"/>'
                         // delete button
-                        + '<i class="deleteKeyBtn glyphicon glyphicon-trash" ng-click="deleteKey(child, key)"></i>'
+                        + '<i ng-show="$parent.jsonDelete" class="deleteKeyBtn glyphicon glyphicon-trash" ng-click="deleteKey(child, key)"></i>'
                     + '</span>'
                     // object value
                     + '<span class="jsonObjectValue">' + switchTemplate + '</span>'
@@ -233,10 +243,10 @@ angular.module('JSONedit', ['ui.sortable'])
             + '<div class="jsonContents" ng-hide="collapsed">'
                 + '<ol class="arrayOl" ui-sortable="sortableOptions" ng-model="child">'
                     // repeat
-                    + '<li class="arrayItem" ng-repeat="val in child">'
+                    + '<li class="arrayItem" ng-repeat="(key,val) in child">'
                         // delete button
-                        + '<i class="deleteKeyBtn glyphicon glyphicon-trash" ng-click="deleteKey(child, $index)"></i>'
-                        + '<i class="moveArrayItemBtn glyphicon glyphicon-align-justify"></i>'
+                        + '<i ng-show="$parent.jsonDelete" class="deleteKeyBtn glyphicon glyphicon-trash" ng-click="deleteKey(child, $index)"></i>'
+                        + '<i ng-show="$parent.jsonChangeOrder" class="moveArrayItemBtn glyphicon glyphicon-align-justify"></i>'
                         + '<span>' + switchTemplate + '</span>'
                     + '</li>'
                     // repeat end
