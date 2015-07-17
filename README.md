@@ -24,9 +24,9 @@ var app = angular.module('exampleApp', ['JSONedit']);
 <link  href="bower_components/JSONedit/css/styles.css" rel="stylesheet" type="text/css" />
 
 <!-- include the dependencies in this order (if you don't already have them) -->
-<script src="bower_components/JSONedit/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/JSONedit/bower_components/jquery-ui/jquery-ui.min.js"></script>
-<script src="bower_components/JSONedit/bower_components/angular/angular.min.js"></script>
-<script src="bower_components/JSONedit/bower_components/angular-ui-sortable/sortable.min.js"></script>
-<link  href="bower_components/JSONedit/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="bower_components/json-edit/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/json-edit/bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="bower_components/json-edit/bower_components/angular/angular.min.js"></script>
+<script src="bower_components/json-edit/bower_components/angular-ui-sortable/sortable.min.js"></script>
+<link  href="bower_components/json-edit/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 ```
