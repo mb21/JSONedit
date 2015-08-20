@@ -233,7 +233,7 @@ angular.module('JSONedit', ['ui.sortable'])
             + '<div class="jsonContents" ng-hide="collapsed">'
                 + '<ol class="arrayOl" ui-sortable="sortableOptions" ng-model="child">'
                     // repeat
-                    + '<li class="arrayItem" ng-repeat="val in child track by $index">'
+                    + '<li class="arrayItem" ng-repeat="(key, val) in child track by $index">'
                         // delete button
                         + '<i class="deleteKeyBtn glyphicon glyphicon-trash" ng-click="deleteKey(child, $index)"></i>'
                         + '<i class="moveArrayItemBtn glyphicon glyphicon-align-justify"></i>'
