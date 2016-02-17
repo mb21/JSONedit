@@ -33,8 +33,9 @@ angular.module('JSONedit', ['ui.sortable'])
         var arrayName = "Array";
         var refName = "Reference";
         var boolName = "Boolean"
+        var numberName = "Number"
 
-        scope.valueTypes = [stringName, objectName, arrayName, refName, boolName];
+        scope.valueTypes = [stringName, objectName, arrayName, refName, boolName, numberName];
         scope.sortableOptions = {
             axis: 'y'
         };
@@ -62,6 +63,8 @@ angular.module('JSONedit', ['ui.sortable'])
                 return "Array";
             } else if(type === "[object Boolean]"){
                 return "Boolean";
+            } else if(type === "[object Number]"){
+                return "Number";
             } else {
                 return "Literal";
             }
@@ -117,10 +120,16 @@ angular.module('JSONedit', ['ui.sortable'])
                             return;
                         }
                     }
+                    if (scope.valueType == numberName && !isNumber(scope.valueName)){
+                        alert("Please fill in a number");
+                        return;
+                    }
                     // add item to object
                     switch(scope.valueType) {
-                        case stringName: obj[scope.keyName] = scope.valueName ? scope.possibleNumber(scope.valueName) : "";
+                        case stringName: obj[scope.keyName] = scope.valueName ? scope.valueName : "";
                                         break;
+                        case numberName: obj[scope.keyName] = scope.possibleNumber(scope.valueName);
+                                         break;
                         case objectName:  obj[scope.keyName] = {};
                                         break;
                         case arrayName:   obj[scope.keyName] = [];
@@ -136,10 +145,16 @@ angular.module('JSONedit', ['ui.sortable'])
                     scope.showAddKey = false;
                 }
             } else if (getType(obj) == "Array") {
+                if (scope.valueType == numberName && !isNumber(scope.valueName)){
+                    alert("Please fill in a number");
+                    return;
+                }
                 // add item to array
                 switch(scope.valueType) {
                     case stringName: obj.push(scope.valueName ? scope.valueName : "");
                                     break;
+                    case numberName: obj.push(scope.possibleNumber(scope.valueName));
+                                     break;
                     case objectName:  obj.push({});
                                     break;
                     case arrayName:   obj.push([]);
@@ -175,8 +190,11 @@ angular.module('JSONedit', ['ui.sortable'])
                 + '<span ng-switch-when="Boolean" type="boolean">'
                     + '<input type="checkbox" ng-model="val" ng-model-onblur ng-change="child[key] = val">'
                 + '</span>'
+                + '<span ng-switch-when="Number" type="number"><input type="text" ng-model="val" '
+                    + 'placeholder="0" ng-model-onblur ng-change="child[key] = possibleNumber(val)"/>'
+                + '</span>'
                 + '<span ng-switch-default class="jsonLiteral"><input type="text" ng-model="val" '
-                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = possibleNumber(val)"/>'
+                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = val"/>'
                 + '</span>'
             + '</span>';
         
@@ -195,6 +213,8 @@ angular.module('JSONedit', ['ui.sortable'])
                     + 'ng-init="$parent.valueType=\''+stringName+'\'" ui-keydown="{\'enter\':\'addItem(child)\'}"></select>'
                 // input value
                 + '<span ng-show="$parent.valueType == \''+stringName+'\'"> : <input type="text" placeholder="Value" '
+                    + 'class="form-control input-sm addItemValueInput" ng-model="$parent.valueName" ui-keyup="{\'enter\':\'addItem(child)\'}"/></span> '
+                + '<span ng-show="$parent.valueType == \''+numberName+'\'"> : <input type="text" placeholder="Value" '
                     + 'class="form-control input-sm addItemValueInput" ng-model="$parent.valueName" ui-keyup="{\'enter\':\'addItem(child)\'}"/></span> '
                 // Add button
                 + '<button class="btn btn-primary btn-sm" ng-click="addItem(child)">Add</button> '
