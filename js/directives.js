@@ -217,12 +217,12 @@ angular.module('JSONedit', ['ui.sortable'])
                 + '<span ng-show="$parent.valueType == \''+numberName+'\'"> : <input type="text" placeholder="Value" '
                     + 'class="form-control input-sm addItemValueInput" ng-model="$parent.valueName" ui-keyup="{\'enter\':\'addItem(child)\'}"/></span> '
                 // Add button
-                + '<button class="btn btn-primary btn-sm" ng-click="addItem(child)">Add</button> '
-                + '<button class="btn btn-default btn-sm" ng-click="$parent.showAddKey=false">Cancel</button>'
+                + '<button type="button" class="btn btn-primary btn-sm" ng-click="addItem(child)">Add</button> '
+                + '<button type="button" class="btn btn-default btn-sm" ng-click="$parent.showAddKey=false">Cancel</button>'
             + '</span>'
             + '<span ng-switch-default>'
                 // plus button
-                + '<button class="addObjectItemBtn" ng-click="$parent.showAddKey = true"><i class="glyphicon glyphicon-plus"></i></button>'
+                + '<button type="button" class="addObjectItemBtn" ng-click="$parent.showAddKey = true"><i class="glyphicon glyphicon-plus"></i></button>'
             + '</span>'
         + '</div>';
     
