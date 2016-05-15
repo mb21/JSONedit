@@ -32,8 +32,8 @@ angular.module('JSONedit', ['ui.sortable'])
         var objectName = "Object";
         var arrayName = "Array";
         var refName = "Reference";
-        var boolName = "Boolean"
-        var numberName = "Number"
+        var boolName = "Boolean";
+        var numberName = "Number";
 
         scope.valueTypes = [stringName, objectName, arrayName, refName, boolName, numberName];
         scope.sortableOptions = {
