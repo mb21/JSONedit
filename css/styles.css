@@ -134,6 +134,7 @@
     font-style: italic;
     font-family: Georgia, serif;
     list-style-type: decimal;
+    height: 30px;
 }
 .jsonView ol.arrayOl li input, .jsonView li select, .jsonView li button {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
