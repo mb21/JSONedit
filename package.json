@@ -1,0 +1,19 @@
+{
+  "name": "ng-json-edit",
+  "version": "0.2.1",
+  "description": "User friendly, visual JSON editor built as an AngularJS directive. Provides a basic GUI to edit JSON.",
+  "main": "js/directives.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanp/JSONedit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivanp/JSONedit/issues"
+  },
+  "homepage": "https://github.com/ivanp/JSONedit#readme"
+}
