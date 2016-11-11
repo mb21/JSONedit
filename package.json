@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ivanp/JSONedit.git"
+    "url": "git+https://github.com/mb21/JSONedit.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ivanp/JSONedit/issues"
+    "url": "https://github.com/mb21/JSONedit/issues"
   },
-  "homepage": "https://github.com/ivanp/JSONedit#readme"
+  "homepage": "https://github.com/mb21/JSONedit#readme"
 }
