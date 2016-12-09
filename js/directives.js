@@ -193,8 +193,8 @@ angular.module('JSONedit', ['ui.sortable'])
                 + '<span ng-switch-when="Number" type="number"><input type="text" ng-model="val" '
                     + 'placeholder="0" ng-model-onblur ng-change="child[key] = possibleNumber(val)"/>'
                 + '</span>'
-                + '<span ng-switch-default class="jsonLiteral"><input type="text" ng-model="val" '
-                    + 'placeholder="Empty" ng-model-onblur ng-change="child[key] = val"/>'
+                + '<span ng-switch-default class="jsonLiteral"><input type="text" ng-model="child[key]" '
+                    + 'placeholder="Empty" ng-model-onblur/>'
                 + '</span>'
             + '</span>';
         
