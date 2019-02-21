@@ -217,7 +217,7 @@ angular.module('JSONedit', ['ui.sortable'])
                 + '<span ng-show="$parent.valueType == \''+numberName+'\'"> : <input type="text" placeholder="Value" '
                     + 'class="form-control input-sm addItemValueInput" ng-model="$parent.valueName" ui-keyup="{\'enter\':\'addItem(child)\'}"/></span> '
                 // Add button
-                + '<button type="button" class="btn btn-primary btn-sm" ng-click="addItem(child)">Add</button> '
+                + '<button type="button" class="btn btn-primary btn-sm" ng-disabled="($parent.valueType == \''+stringName+'\' || $parent.valueType == \''+numberName+'\') && !$parent.valueName" ng-click="addItem(child)">Add</button> '
                 + '<button type="button" class="btn btn-default btn-sm" ng-click="$parent.showAddKey=false">Cancel</button>'
             + '</span>'
             + '<span ng-switch-default>'
